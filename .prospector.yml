@@ -11,6 +11,13 @@ member-warnings: false
 
 ignore-paths:
   - docs
+  - models
+  - fhir-parser
+  - profiles
+  - notebooks
+  - mappings.py
+  - generate_models.py
+  - settings.py
 
 pyroma:
     run: true
