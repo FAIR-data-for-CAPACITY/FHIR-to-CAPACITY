@@ -5,4 +5,4 @@ pycodestyle
 click
 PyCap
 clize
-prospector
+prospector[with_pyroma]
