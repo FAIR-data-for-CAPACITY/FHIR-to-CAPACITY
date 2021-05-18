@@ -2,3 +2,4 @@ fhirclient
 jupyter
 pytest
 pycodestyle
+click

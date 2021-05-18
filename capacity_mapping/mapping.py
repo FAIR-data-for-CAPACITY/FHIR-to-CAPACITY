@@ -12,3 +12,8 @@ def map_patient(patient: patient.Patient) -> dict:
     return {
         Capacity.sex.name: Capacity.sex.mapping[patient.gender]
     }
+
+
+# def fhir_to_capacity(fhir_base_url, capacity_url):
+#     # Query all patients on fhir server
+#
