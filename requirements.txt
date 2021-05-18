@@ -3,3 +3,5 @@ jupyter
 pytest
 pycodestyle
 click
+PyCap
+clize
