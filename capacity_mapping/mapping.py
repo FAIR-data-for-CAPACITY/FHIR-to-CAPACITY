@@ -6,9 +6,7 @@ from fhirclient.models.patient import Patient
 from fhirclient.server import FHIRServer
 import redcap
 from capacity_mapping.codebook import Capacity
-from clize import run
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -27,7 +25,6 @@ def fhir_to_capacity(fhir_base_url, capacity_url, capacity_token):
 
     # Query all patients on fhir server
     fhir_server = FHIRServer(None, fhir_base_url)
-    project = redcap.Project(capacity_url, capacity_token)
 
     logger.info('Querying patients')
     search = Patient.where({})
@@ -37,8 +34,5 @@ def fhir_to_capacity(fhir_base_url, capacity_url, capacity_token):
     mapped = [map_patient(patient) for patient in patients]
 
     logger.info('Uploading patients')
+    project = redcap.Project(capacity_url, capacity_token)
     project.import_records(mapped)
-
-
-if __name__ == '__main__':
-    run(fhir_to_capacity)
