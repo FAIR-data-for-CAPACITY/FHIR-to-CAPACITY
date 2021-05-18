@@ -20,8 +20,8 @@ def map_patient(patient: Patient) -> dict:
 
 
 def fhir_to_capacity(fhir_base_url, capacity_url, capacity_token):
-    logger.info(f'Mapping all patients in FHIR server at {fhir_base_url} to '
-                f'redcap server at {capacity_url}')
+    logger.info('Mapping all patients in FHIR server at %s to redcap server '
+                'at %s', fhir_base_url, capacity_url)
 
     # Query all patients on fhir server
     fhir_server = FHIRServer(None, fhir_base_url)
