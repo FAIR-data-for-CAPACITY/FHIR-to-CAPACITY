@@ -1,2 +1,4 @@
-fhir.resources
 fhirclient
+jupyter
+pytest
+pycodestyle
