@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import logging
-import sys
 
+import redcap
 from fhirclient.models.patient import Patient
 from fhirclient.server import FHIRServer
-import redcap
+
 from capacity_mapping.codebook import Capacity
 
 logger = logging.getLogger(__name__)
