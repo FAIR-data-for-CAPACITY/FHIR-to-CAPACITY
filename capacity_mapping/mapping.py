@@ -4,7 +4,7 @@ from typing import List, Dict
 
 import redcap
 from fhirclient.models.patient import Patient
-from fhirclient.server import FHIRServer
+from dateutil.relativedelta import relativedelta
 
 from capacity_mapping.codebook import Capacity
 from fhirclient.models.encounter import Encounter
@@ -23,8 +23,7 @@ def map_patient(patient: Patient, encounters: List[Encounter] = None) -> dict:
     if encounters:
         encounter = encounters[0]
 
-        admission_date = encounter.period.start.date
-        age_delta = admission_date - patient.birthDate.date
+        age_delta = get_patient_age(encounter, patient)
 
         if age_delta.years < 1:
             age = age_delta.months
@@ -41,14 +40,18 @@ def map_patient(patient: Patient, encounters: List[Encounter] = None) -> dict:
     }
 
 
-def get_patient_age(patient: Patient):
+def get_patient_age(encounter, patient):
     """
     Determines patient age at time of encounter
-
+    
+    :param encounter:
     :param patient:
     :return:
     """
-    birth_date = patient.birthDate.date
+    admission_date = encounter.period.start.date
+    # Relativedelta takes leap years into account and gives correct age
+    age_delta = relativedelta(admission_date, patient.birthDate.date)
+    return age_delta
 
 
 def map_all_patients(patient_records: Dict[str, dict]):
