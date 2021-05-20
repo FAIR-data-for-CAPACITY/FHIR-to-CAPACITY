@@ -42,11 +42,15 @@ def fill_server(fhir_base, n=DEFAULT_NUM_PATIENTS):
         encounter = create_encounter(created_patient)
         encounter.create(fhir_server)
 
+    print(f'Created {n} patients')
+
 
 def create_patients(num_patients):
     for _ in range(num_patients):
         p = Patient()
         p.gender = random.choice(list(Capacity.sex.mapping.keys()))
+        p.birthDate = FHIRDate()
+        p.birthDate.date = create_random_datetime()
         yield p
 
 
@@ -61,7 +65,7 @@ def create_encounter(patient: Patient) -> Encounter:
 
     encounter.period = Period()
     encounter.period.start = FHIRDate()
-    encounter.period.start.date = create_random_datetime()
+    encounter.period.start.date = create_random_datetime(min=patient.birthDate.date)
     return encounter
 
 
@@ -72,7 +76,6 @@ def create_random_datetime(min=MIN_BIRTHDAY, max=MAX_BIRTHDAY):
     random_hours = random.randrange(0, 24)
 
     return min + timedelta(days=random_days, hours=random_hours)
-
 
 
 if __name__ == '__main__':
