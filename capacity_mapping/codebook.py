@@ -4,5 +4,5 @@ Variable = namedtuple('Variable', ['name', 'mapping'])
 
 
 class Capacity:
-    sex = Variable('sex', {'male': 1, 'female': 2, 'other': -1, 'unknown': -1})
+    sex = Variable('sex', {'male': 1, 'female': 2, 'other': -1, 'unknown': -1, None: -1})
     patient_id = Variable('subjid', None)
