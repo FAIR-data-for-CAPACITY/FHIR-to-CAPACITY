@@ -7,3 +7,4 @@ PyCap
 clize
 prospector[with_pyroma]
 pytest-cov
+coveralls
