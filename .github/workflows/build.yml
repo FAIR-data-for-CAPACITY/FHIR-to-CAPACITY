@@ -31,7 +31,7 @@ jobs:
         shell: bash -l {0}
         run: prospector -o grouped -o pylint:pylint-report.txt
       - name: Build
-        shell: bash -l {0}
+        shell: bash {0}
         run: |
           python setup.py build
 
