@@ -1,2 +1,10 @@
-fhir.resources
 fhirclient
+jupyter
+pytest
+pycodestyle
+click
+PyCap
+clize
+prospector[with_pyroma]
+pytest-cov
+coveralls

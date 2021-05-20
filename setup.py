@@ -18,7 +18,7 @@ with open('README.rst') as readme_file:
 setup(
     name='capacity_mapping',
     version=version,
-    description="",
+    description="Conversion of FHIR data",
     long_description=readme + '\n\n',
     author="Djura Smits",
     author_email='d.smits@esciencecenter.nl',
