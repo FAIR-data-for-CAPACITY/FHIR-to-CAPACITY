@@ -63,8 +63,8 @@ def map_all_patients(patient_records: Dict[str, dict]):
             yield map_patient(**record)
             success += 1
         except Exception as e:
-            logger.error('Could not map patient %s, reason: %s', record['patient'].relativePath()
-                         , e)
+            logger.error('Could not map patient %s, reason: %s',
+                         record['patient'].relativePath(), e)
             fails += 1
 
     logger.info('Transformed %i records', success)
