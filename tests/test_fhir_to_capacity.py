@@ -26,5 +26,5 @@ def test_map_patient():
     assert mapped['subjid'] == '123'
     assert mapped['age_estimateyears'] == 31
     assert mapped['age_estimateyearsu'] == 2
-    assert mapped['admission_date'] == '20052021'
-    assert mapped['admission_any_date'] == '20052021'
+    assert mapped['admission_date'] == '2021-05-20'
+    assert mapped['admission_any_date'] == '2021-05-20'
