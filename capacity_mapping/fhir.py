@@ -1,11 +1,12 @@
 """
 Wrapper around fhirclient FHIR server to perform queries.
 """
+import logging
+
 from fhirclient.models.bundle import Bundle
 from fhirclient.models.encounter import Encounter
-from fhirclient.server import FHIRServer
 from fhirclient.models.patient import Patient
-import logging
+from fhirclient.server import FHIRServer
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +53,6 @@ class FHIRWrapper:
     @staticmethod
     def get_bundle_resources(bundle):
         yield from (e.resource for e in bundle.entry)
-
 
     @staticmethod
     def __get_next_url(bundle: Bundle):

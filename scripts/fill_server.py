@@ -32,29 +32,29 @@ def fill_server(fhir_base, n=DEFAULT_NUM_PATIENTS):
     """
     fhir_server = FHIRServer(None, fhir_base)
 
-    patients = create_patients(n)
+    patients = __create_patients(n)
 
     for p in patients:
         result_json = p.create(fhir_server)
 
         created_patient = Patient.with_json(result_json)
 
-        encounter = create_encounter(created_patient)
+        encounter = __create_encounter(created_patient)
         encounter.create(fhir_server)
 
     print(f'Created {n} patients')
 
 
-def create_patients(num_patients):
+def __create_patients(num_patients):
     for _ in range(num_patients):
         p = Patient()
         p.gender = random.choice(list(Capacity.sex.mapping.keys()))
         p.birthDate = FHIRDate()
-        p.birthDate.date = create_random_datetime()
+        p.birthDate.date = __create_random_datetime()
         yield p
 
 
-def create_encounter(patient: Patient) -> Encounter:
+def __create_encounter(patient: Patient) -> Encounter:
     patient_reference = FHIRReference()
     patient_reference.reference = patient.relativePath()
     encounter = Encounter()
@@ -65,17 +65,17 @@ def create_encounter(patient: Patient) -> Encounter:
 
     encounter.period = Period()
     encounter.period.start = FHIRDate()
-    encounter.period.start.date = create_random_datetime(min=patient.birthDate.date)
+    encounter.period.start.date = __create_random_datetime(min_=patient.birthDate.date)
     return encounter
 
 
-def create_random_datetime(min=MIN_BIRTHDAY, max=MAX_BIRTHDAY):
-    time_diff = max - min
+def __create_random_datetime(min_=MIN_BIRTHDAY, max_=MAX_BIRTHDAY):
+    time_diff = max_ - min_
     random_days = random.randrange(time_diff.days)
 
     random_hours = random.randrange(0, 24)
 
-    return min + timedelta(days=random_days, hours=random_hours)
+    return min_ + timedelta(days=random_days, hours=random_hours)
 
 
 if __name__ == '__main__':

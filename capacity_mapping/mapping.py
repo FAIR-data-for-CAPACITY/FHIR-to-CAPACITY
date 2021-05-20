@@ -3,11 +3,11 @@ import logging
 from typing import List, Dict
 
 import redcap
-from fhirclient.models.patient import Patient
 from dateutil.relativedelta import relativedelta
+from fhirclient.models.encounter import Encounter
+from fhirclient.models.patient import Patient
 
 from capacity_mapping.codebook import Capacity
-from fhirclient.models.encounter import Encounter
 from capacity_mapping.fhir import FHIRWrapper
 
 logger = logging.getLogger(__name__)
