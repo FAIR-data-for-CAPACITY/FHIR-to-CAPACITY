@@ -40,6 +40,6 @@ jobs:
           pytest --cov=capacity_mapping --cov-report=xml
       - name: Coveralls
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           coveralls --service=github
