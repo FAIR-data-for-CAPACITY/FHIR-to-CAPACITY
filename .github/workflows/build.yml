@@ -34,8 +34,12 @@ jobs:
         shell: bash -l {0}
         run: |
           python setup.py build
-      - name: Test
-        shell: bash -l {0}
+
+      - name: Test with pytest
         run: |
-          python setup.py test
-          pytest --cov --cov-report term --cov-report xml --junitxml=xunit-result.xml
+          pytest --cov=capacity_mapping --cov-report=xml
+      - name: Coveralls
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+        run: |
+          coveralls --service=github
