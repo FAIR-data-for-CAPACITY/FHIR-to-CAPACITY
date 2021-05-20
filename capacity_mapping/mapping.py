@@ -23,14 +23,7 @@ def map_patient(patient: Patient, encounters: List[Encounter] = None) -> dict:
     if encounters:
         encounter = encounters[0]
 
-        age_delta = get_patient_age(encounter, patient)
-
-        if age_delta.years < 1:
-            age = age_delta.months
-            age_unit = Capacity.age_estimateyearsu.mapping['months']
-        else:
-            age = age_delta.years
-            age_unit = Capacity.age_estimateyearsu.mapping['years']
+        age, age_unit = get_patient_age(encounter, patient)
 
     return {
         Capacity.patient_id.name: patient.id,
@@ -43,7 +36,7 @@ def map_patient(patient: Patient, encounters: List[Encounter] = None) -> dict:
 def get_patient_age(encounter, patient):
     """
     Determines patient age at time of encounter
-    
+
     :param encounter:
     :param patient:
     :return:
@@ -51,7 +44,15 @@ def get_patient_age(encounter, patient):
     admission_date = encounter.period.start.date
     # Relativedelta takes leap years into account and gives correct age
     age_delta = relativedelta(admission_date, patient.birthDate.date)
-    return age_delta
+
+    if age_delta.years < 1:
+        age = age_delta.months
+        age_unit = Capacity.age_estimateyearsu.mapping['months']
+    else:
+        age = age_delta.years
+        age_unit = Capacity.age_estimateyearsu.mapping['years']
+
+    return age, age_unit
 
 
 def map_all_patients(patient_records: Dict[str, dict]):
@@ -99,7 +100,6 @@ def query_patient_related_data(fhir_wrapper):
 
     patient_records = \
         {patient.relativePath(): {'patient': patient} for patient in patients}
-
 
     # Add encounters to the dict
     for encounter in encounters:
