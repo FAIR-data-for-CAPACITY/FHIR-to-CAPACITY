@@ -8,3 +8,5 @@ class Capacity:
     patient_id = Variable('subjid', None)
     age_estimateyears = Variable('age_estimateyears', None)
     age_estimateyearsu = Variable('age_estimateyearsu', {'months': 1, 'years': 2})
+    admission_date = Variable('admission_date', None)
+    admission_any_date = Variable('admission_any_date', None)
