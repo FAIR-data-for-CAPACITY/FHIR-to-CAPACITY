@@ -11,6 +11,7 @@ from capacity_mapping.codebook import Capacity
 from capacity_mapping.fhir import FHIRWrapper
 
 logger = logging.getLogger(__name__)
+DATE_FORMAT = '%Y-%m-%d'
 
 
 def map_patient(patient: Patient, encounters: List[Encounter] = None) -> dict:
@@ -19,17 +20,22 @@ def map_patient(patient: Patient, encounters: List[Encounter] = None) -> dict:
     # TODO: For now I'm skipping patients without encounters
     age = None
     age_unit = None
+    admission_date = None
 
     if encounters:
         encounter = encounters[0]
 
         age, age_unit = get_patient_age(encounter, patient)
 
+        admission_date = encounter.period.start.date.strftime(DATE_FORMAT)
+
     return {
         Capacity.patient_id.name: patient.id,
         Capacity.sex.name: Capacity.sex.mapping[patient.gender],
         Capacity.age_estimateyears.name: age,
-        Capacity.age_estimateyearsu.name: age_unit
+        Capacity.age_estimateyearsu.name: age_unit,
+        Capacity.admission_date.name: admission_date,
+        Capacity.admission_any_date.name: admission_date
     }
 
 
