@@ -18,7 +18,7 @@ with open('README.rst') as readme_file:
 setup(
     name='capacity_mapping',
     version=version,
-    description="Conversion of FHIR data",
+    description="Conversion of FHIR data and upload to CAPACITY",
     long_description=readme + '\n\n',
     author="Djura Smits",
     author_email='d.smits@esciencecenter.nl',
@@ -41,14 +41,16 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     test_suite='tests',
-    install_requires=[],  # FIXME: add your package's dependencies to this list
+    install_requires=[
+        'fhirclient~=3.2.0',
+        'PyCap~=1.1.3',
+        'clize~=4.1.1',
+        'Requests~=2.25.1',
+        'python-dateutil~=2.8.1'
+    ],
     setup_requires=[
         # dependency for `python setup.py test`
         'pytest-runner',
-        # dependencies for `python setup.py build_sphinx`
-        'sphinx',
-        'sphinx_rtd_theme',
-        'recommonmark'
     ],
     tests_require=[
         'pytest',
@@ -56,7 +58,7 @@ setup(
         'pycodestyle',
     ],
     extras_require={
-        'dev':  ['prospector[with_pyroma]', 'yapf', 'isort'],
+        'dev': ['prospector[with_pyroma]', 'yapf', 'isort'],
     },
     data_files=[('citation/capacity_mapping', ['CITATION.cff'])]
 )
