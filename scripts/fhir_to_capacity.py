@@ -6,7 +6,7 @@ from clize import run
 
 from capacity_mapping import mapping
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 
 def fhir_to_capacity(fhir_base_url, capacity_url, capacity_token):

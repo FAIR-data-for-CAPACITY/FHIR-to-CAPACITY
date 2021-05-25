@@ -7,10 +7,18 @@ of resources on a fhir server that can be used to test the mappings.
 import random
 
 from clize import run
+from fhirclient.models.encounter import Encounter
 from fhirclient.models.patient import Patient
 from fhirclient.server import FHIRServer
+from fhirclient.models.fhirreference import FHIRReference
+from fhirclient.models.period import Period
 
 from capacity_mapping.codebook import Capacity
+from datetime import datetime, timedelta
+from fhirclient.models.fhirdate import FHIRDate
+
+MIN_BIRTHDAY = datetime(1900, 1, 1)
+MAX_BIRTHDAY = datetime.now()
 
 DEFAULT_NUM_PATIENTS = 10
 
@@ -24,17 +32,50 @@ def fill_server(fhir_base, n=DEFAULT_NUM_PATIENTS):
     """
     fhir_server = FHIRServer(None, fhir_base)
 
-    patients = create_patients(n)
+    patients = __create_patients(n)
 
     for p in patients:
-        p.create(fhir_server)
+        result_json = p.create(fhir_server)
+
+        created_patient = Patient.with_json(result_json)
+
+        encounter = __create_encounter(created_patient)
+        encounter.create(fhir_server)
+
+    print(f'Created {n} patients')
 
 
-def create_patients(num_patients):
+def __create_patients(num_patients):
     for _ in range(num_patients):
         p = Patient()
         p.gender = random.choice(list(Capacity.sex.mapping.keys()))
+        p.birthDate = FHIRDate()
+        p.birthDate.date = __create_random_datetime()
         yield p
+
+
+def __create_encounter(patient: Patient) -> Encounter:
+    patient_reference = FHIRReference()
+    patient_reference.reference = patient.relativePath()
+    encounter = Encounter()
+    encounter.subject = patient_reference
+    encounter.status = random.choice(['planned', 'arrived', 'triaged',
+                                      'in-progress', 'onleave', 'finished',
+                                      'cancelled'])
+
+    encounter.period = Period()
+    encounter.period.start = FHIRDate()
+    encounter.period.start.date = __create_random_datetime(min_=patient.birthDate.date)
+    return encounter
+
+
+def __create_random_datetime(min_=MIN_BIRTHDAY, max_=MAX_BIRTHDAY):
+    time_diff = max_ - min_
+    random_days = random.randrange(time_diff.days)
+
+    random_hours = random.randrange(0, 24)
+
+    return min_ + timedelta(days=random_days, hours=random_hours)
 
 
 if __name__ == '__main__':
