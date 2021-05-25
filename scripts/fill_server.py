@@ -8,6 +8,7 @@ import random
 
 from clize import run
 from fhirclient.models.encounter import Encounter
+from fhirclient.models.identifier import Identifier
 from fhirclient.models.patient import Patient
 from fhirclient.server import FHIRServer
 from fhirclient.models.fhirreference import FHIRReference
@@ -16,6 +17,7 @@ from fhirclient.models.period import Period
 from capacity_mapping.codebook import Capacity
 from datetime import datetime, timedelta
 from fhirclient.models.fhirdate import FHIRDate
+import uuid
 
 MIN_BIRTHDAY = datetime(1900, 1, 1)
 MAX_BIRTHDAY = datetime.now()
@@ -48,6 +50,7 @@ def fill_server(fhir_base, n=DEFAULT_NUM_PATIENTS):
 def __create_patients(num_patients):
     for _ in range(num_patients):
         p = Patient()
+        p.identifier = [Identifier({'id': str(uuid.uuid4())})]
         p.gender = random.choice(list(Capacity.sex.mapping.keys()))
         p.birthDate = FHIRDate()
         p.birthDate.date = __create_random_datetime()

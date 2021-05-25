@@ -26,6 +26,12 @@ def map_patient(patient: Patient, encounters: List[Encounter] = None) -> List[Di
     outcome_date = None
     outcome_date_known = False
 
+    # If there is a specific patient id, use that, otherwise use FHIR id
+    patient_id = patient.id
+
+    if patient.identifier:
+        patient_id = patient.identifier[0].id
+
     if encounters:
         encounter = encounters[0]
 
@@ -36,7 +42,7 @@ def map_patient(patient: Patient, encounters: List[Encounter] = None) -> List[Di
             outcome_date = encounter.period.end.date.strftime(DATE_FORMAT)
             outcome_date_known = True
 
-    capacity_patient = Capacity(patient.id, sex=patient.gender, age_estimateyears=age,
+    capacity_patient = Capacity(patient_id, sex=patient.gender, age_estimateyears=age,
                                 age_estimateyearsu=age_unit, admission_date=admission_date,
                                 admission_any_date=admission_date,
                                 outcome_date_known=outcome_date_known,
