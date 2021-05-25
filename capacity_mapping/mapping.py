@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+import traceback
 from typing import List, Dict, Any
 
 import redcap
@@ -76,6 +77,8 @@ def map_all_patients(patient_records: Dict[str, dict]):
         except Exception as e:
             logger.error('Could not map patient %s, reason: %s',
                          record['patient'].relativePath(), e)
+            traceback.print_exc()
+
             fails += 1
 
     logger.info('Transformed %i records', success)
