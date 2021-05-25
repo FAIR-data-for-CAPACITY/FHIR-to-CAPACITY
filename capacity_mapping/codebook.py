@@ -10,3 +10,10 @@ class Capacity:
     age_estimateyearsu = Variable('age_estimateyearsu', {'months': 1, 'years': 2})
     admission_date = Variable('admission_date', None)
     admission_any_date = Variable('admission_any_date', None)
+
+    # CAPACITY-Discharge
+    outcome = Variable('capdis_outcome', {'discharged_alive': 1, 'transfer': 3, 'death': 4,
+                                          'palliative_discharge': 5, 'unknown': 6, None: 6})
+    outcome_date_known = Variable('capdis_date', {True: 1, False: 2})
+    outcome_date = Variable('capdis_outcomedate', None)
+    

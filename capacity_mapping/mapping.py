@@ -22,12 +22,18 @@ def map_patient(patient: Patient, encounters: List[Encounter] = None) -> dict:
     age_unit = None
     admission_date = None
 
+    outcome_date = None
+    outcome_date_known = False
+
     if encounters:
         encounter = encounters[0]
 
         age, age_unit = get_patient_age(encounter, patient)
-
         admission_date = encounter.period.start.date.strftime(DATE_FORMAT)
+
+        if encounter.period.end:
+            outcome_date = encounter.period.end.date.strftime(DATE_FORMAT)
+            outcome_date_known = True
 
     return {
         Capacity.patient_id.name: patient.id,
@@ -35,7 +41,9 @@ def map_patient(patient: Patient, encounters: List[Encounter] = None) -> dict:
         Capacity.age_estimateyears.name: age,
         Capacity.age_estimateyearsu.name: age_unit,
         Capacity.admission_date.name: admission_date,
-        Capacity.admission_any_date.name: admission_date
+        Capacity.admission_any_date.name: admission_date,
+        Capacity.outcome_date_known.name: outcome_date_known,
+        Capacity.outcome_date.name: outcome_date
     }
 
 

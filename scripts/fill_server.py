@@ -66,6 +66,10 @@ def __create_encounter(patient: Patient) -> Encounter:
     encounter.period = Period()
     encounter.period.start = FHIRDate()
     encounter.period.start.date = __create_random_datetime(min_=patient.birthDate.date)
+
+    encounter.period.end = FHIRDate()
+    encounter.period.end.date = __create_random_datetime(min_=encounter.period.start.date)
+
     return encounter
 
 

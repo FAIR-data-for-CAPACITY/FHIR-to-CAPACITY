@@ -18,7 +18,10 @@ def test_map_patient():
     encounter = Encounter()
     encounter.period = Period()
     encounter.period.start = FHIRDate()
-    encounter.period.start.date = date(2021, 5, 20)
+    encounter.period.start.date = date(2021, 4, 20)
+
+    encounter.period.end = FHIRDate()
+    encounter.period.end.date = date(2021, 5, 20)
 
     mapped = mapping.map_patient(patient, encounters=[encounter])
 
@@ -26,5 +29,7 @@ def test_map_patient():
     assert mapped['subjid'] == '123'
     assert mapped['age_estimateyears'] == 31
     assert mapped['age_estimateyearsu'] == 2
-    assert mapped['admission_date'] == '2021-05-20'
-    assert mapped['admission_any_date'] == '2021-05-20'
+    assert mapped['admission_date'] == '2021-04-20'
+    assert mapped['admission_any_date'] == '2021-04-20'
+    assert mapped['capdis_outcomedate'] == '2021-05-20'
+    assert mapped['capdis_date']
