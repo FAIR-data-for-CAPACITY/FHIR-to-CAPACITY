@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
-from typing import List, Dict
+from typing import List, Dict, Any
 
 import redcap
 from dateutil.relativedelta import relativedelta
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 DATE_FORMAT = '%Y-%m-%d'
 
 
-def map_patient(patient: Patient, encounters: List[Encounter] = None) -> dict:
+def map_patient(patient: Patient, encounters: List[Encounter] = None) -> List[Dict[str, Any]]:
     # TODO: For now assuming one encounter
     # TODO: Should I query encounters first instead of patients?
     # TODO: For now I'm skipping patients without encounters
@@ -35,16 +35,13 @@ def map_patient(patient: Patient, encounters: List[Encounter] = None) -> dict:
             outcome_date = encounter.period.end.date.strftime(DATE_FORMAT)
             outcome_date_known = True
 
-    return {
-        Capacity.patient_id.name: patient.id,
-        Capacity.sex.name: Capacity.sex.mapping[patient.gender],
-        Capacity.age_estimateyears.name: age,
-        Capacity.age_estimateyearsu.name: age_unit,
-        Capacity.admission_date.name: admission_date,
-        Capacity.admission_any_date.name: admission_date,
-        Capacity.outcome_date_known.name: outcome_date_known,
-        Capacity.outcome_date.name: outcome_date
-    }
+    capacity_patient = Capacity(patient.id, sex=patient.gender, age_estimateyears=age,
+                                age_estimateyearsu=age_unit, admission_date=admission_date,
+                                admission_any_date=admission_date,
+                                outcome_date_known=outcome_date_known,
+                                outcome_date=outcome_date)
+
+    return capacity_patient.to_records()
 
 
 def get_patient_age(encounter, patient):
@@ -74,7 +71,7 @@ def map_all_patients(patient_records: Dict[str, dict]):
     fails = 0
     for record in patient_records.values():
         try:
-            yield map_patient(**record)
+            yield from map_patient(**record)
             success += 1
         except Exception as e:
             logger.error('Could not map patient %s, reason: %s',
