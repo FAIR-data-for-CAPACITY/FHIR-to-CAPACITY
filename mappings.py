@@ -1,2 +1,0 @@
-from Default.mappings import *
-

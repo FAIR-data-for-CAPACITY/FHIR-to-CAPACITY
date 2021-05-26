@@ -1,3 +1,0 @@
-[submodule "fhir-parser"]
-	path = fhir-parser
-	url = https://github.com/FAIR-data-for-CAPACITY/fhir-parser.git
