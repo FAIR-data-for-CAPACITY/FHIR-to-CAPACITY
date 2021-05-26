@@ -30,6 +30,7 @@ setup(
     license="Apache Software License 2.0",
     zip_safe=False,
     keywords='capacity-mapping',
+    scripts=['scripts/fhir_to_capacity', 'scripts/fill_server'],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
