@@ -28,3 +28,5 @@ docs/apidocs
 models/
 downloads/
 profiles/
+
+venv/
