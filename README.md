@@ -36,13 +36,23 @@ cd CAPACITY-mapping
 python3 -m pip install .
 ```
 
-## Documentation
+## Usage
 
-Include a link to your project's full documentation here.
+To upload records from a FHIR server to a CAPACITY registry, simply do the following:
+```bash
+fhir-to-capacity FHIR_BASE_URL CAPACITY_API_URL CAPACITY_TOKEN
+```
+
+## Development
+There is an additional command available for filling a FHIR server with synthetic data. It can 
+be run as follows:
+```bash
+fill-server FHIR_BASE_URL
+```
 
 ## Contributing
 
-If you want to contribute to the development of {{ cookiecutter.package_name }},
+If you want to contribute to the development of CAPACITY-mapping,
 have a look at the [contribution guidelines](CONTRIBUTING.md).
 
 ## Credits
