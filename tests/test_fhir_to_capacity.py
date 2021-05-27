@@ -5,7 +5,7 @@ from fhirclient.models.fhirdate import FHIRDate
 from fhirclient.models.patient import Patient
 from fhirclient.models.period import Period
 
-from capacity_mapping import mapping
+from fhirtocapacity import mapping
 
 
 def test_map_patient():

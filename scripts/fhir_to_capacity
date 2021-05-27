@@ -4,7 +4,7 @@ import sys
 
 from clize import run
 
-from capacity_mapping import mapping
+from fhirtocapacity import mapping
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 

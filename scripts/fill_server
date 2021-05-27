@@ -14,7 +14,7 @@ from fhirclient.server import FHIRServer
 from fhirclient.models.fhirreference import FHIRReference
 from fhirclient.models.period import Period
 
-from capacity_mapping.codebook import Capacity
+from fhirtocapacity.codebook import Capacity
 from datetime import datetime, timedelta
 from fhirclient.models.fhirdate import FHIRDate
 import uuid

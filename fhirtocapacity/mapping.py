@@ -13,8 +13,8 @@ from dateutil.relativedelta import relativedelta
 from fhirclient.models.encounter import Encounter
 from fhirclient.models.patient import Patient
 
-from capacity_mapping.codebook import Capacity
-from capacity_mapping.fhir import FHIRWrapper
+from fhirtocapacity.codebook import Capacity
+from fhirtocapacity.fhir import FHIRWrapper
 
 logger = logging.getLogger(__name__)
 DATE_FORMAT = '%Y-%m-%d'

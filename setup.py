@@ -16,20 +16,20 @@ with open('README.md') as readme_file:
     readme = readme_file.read()
 
 setup(
-    name='capacity_mapping',
+    name='fhirtocapacity',
     version=version,
     description="Conversion of FHIR data and upload to CAPACITY",
     long_description=readme + '\n\n',
     author="Djura Smits",
     author_email='d.smits@esciencecenter.nl',
-    url='https://github.com/FAIR-data-for-CAPACITY /capacity_mapping',
+    url='https://github.com/FAIR-data-for-CAPACITY /fhirtocapacity',
     packages=[
-        'capacity_mapping',
+        'fhirtocapacity',
     ],
     include_package_data=True,
     license="Apache Software License 2.0",
     zip_safe=False,
-    keywords='capacity-mapping',
+    keywords='FHIR-to-CAPACITY',
     scripts=['scripts/fhir_to_capacity', 'scripts/fill_server'],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
@@ -61,5 +61,5 @@ setup(
     extras_require={
         'dev': ['prospector[with_pyroma]', 'yapf', 'isort'],
     },
-    data_files=[('citation/capacity_mapping', ['CITATION.cff'])]
+    data_files=[('citation/fhirtocapacity', ['CITATION.cff'])]
 )
