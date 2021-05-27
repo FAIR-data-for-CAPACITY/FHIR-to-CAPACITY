@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
+"""
+Mapping module
+
+This module contains the code that maps
+"""
 import logging
 import traceback
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Tuple, Iterable
 
 import redcap
 from dateutil.relativedelta import relativedelta
@@ -35,7 +40,7 @@ def map_patient(patient: Patient, encounters: List[Encounter] = None) -> List[Di
     if encounters:
         encounter = encounters[0]
 
-        age, age_unit = get_patient_age(encounter, patient)
+        age, age_unit = get_patient_age(patient, encounter)
         admission_date = encounter.period.start.date.strftime(DATE_FORMAT)
 
         if encounter.period.end:
@@ -51,13 +56,16 @@ def map_patient(patient: Patient, encounters: List[Encounter] = None) -> List[Di
     return capacity_patient.to_records()
 
 
-def get_patient_age(encounter, patient):
+def get_patient_age(patient: Patient, encounter: Encounter) -> Tuple[int, int]:
     """
-    Determines patient age at time of encounter
+    Determines patient age at time of encounter.
 
-    :param encounter:
-    :param patient:
-    :return:
+    If the patient was younger than a year at the time, the age will be expressed in months.
+    Otherwise the unit will be in years.
+
+    :param encounter: an encounter referring to the patient.
+    :param patient: a patient resource
+    :return: a tuple containing age, age_unit
     """
     admission_date = encounter.period.start.date
     # Relativedelta takes leap years into account and gives correct age
@@ -73,7 +81,19 @@ def get_patient_age(encounter, patient):
     return age, age_unit
 
 
-def map_all_patients(patient_records: Dict[str, dict]):
+def map_all_patients(patient_records: Dict[str, dict]) -> Iterable[Dict[str, Any]]:
+    """
+    Takes a dict filled with patient records and maps them to CAPACITY records.
+
+    The patient records are structured as follows:
+
+    { 'PATIENT_ID': {'patient': PATIENT_OBJECT, 'encounters': [ENCOUNTER1, ENCOUNTER2]}, ...}
+
+    :param patient_records: a dict mapping patient ids to the linked FHIR resources as follows:
+                            { 'PATIENT_ID': {'patient': PATIENT_OBJECT,
+                             'encounters': [ENCOUNTER1, ENCOUNTER2]}, ...}
+    :return: a generator containing Capacity records
+    """
     success = 0
     fails = 0
     for record in patient_records.values():
@@ -91,7 +111,14 @@ def map_all_patients(patient_records: Dict[str, dict]):
     logger.info('Failed to transform %i records', fails)
 
 
-def fhir_to_capacity(fhir_base_url, capacity_url, capacity_token):
+def fhir_to_capacity(fhir_base_url: str, capacity_url: str, capacity_token: str) -> None:
+    """
+    Retrieve records from FHIR endpoint, convert the data to conform to the CAPACITY codebook,
+    and upload it to the CAPACITY registry.
+    :param fhir_base_url: the base API url of the FHIR endpoint
+    :param capacity_url: the base API url of the CAPACITY registry
+    :param capacity_token: authentication token for CAPACITY registry
+    """
     logger.info('Mapping all patients in FHIR server at %s to redcap server '
                 'at %s', fhir_base_url, capacity_url)
 
@@ -102,8 +129,6 @@ def fhir_to_capacity(fhir_base_url, capacity_url, capacity_token):
 
     patient_records = query_patient_related_data(fhir_wrapper)
 
-    print(patient_records)
-
     logger.info('Mapping patients')
     mapped = list(map_all_patients(patient_records))
 
@@ -112,7 +137,19 @@ def fhir_to_capacity(fhir_base_url, capacity_url, capacity_token):
     project.import_records(mapped)
 
 
-def query_patient_related_data(fhir_wrapper):
+def query_patient_related_data(fhir_wrapper:FHIRWrapper) -> Dict[str, Dict[str, Any]]:
+    """
+    Query all patient related data. As of now, this data is contained withing Encounter and
+    related Patient resources.
+
+    The data will be returned as a Dict that maps patient ids to a dict containing all related
+    FHIR resources.
+
+    :param fhir_wrapper: fhir wrapper instance connected to the FHIR endpoint.
+    :return: a Dict mapping patient ids to all related resources as follows:
+                 { 'PATIENT_ID':
+                    {'patient': PATIENT_OBJECT, 'encounters': [ENCOUNTER1, ENCOUNTER2]}, ...}
+    """
     patients = fhir_wrapper.get_patients()
     encounters = fhir_wrapper.get_encounters()
 

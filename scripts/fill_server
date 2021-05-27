@@ -26,8 +26,8 @@ DEFAULT_NUM_PATIENTS = 10
 
 
 def fill_server(fhir_base, n=DEFAULT_NUM_PATIENTS):
-    """
-    Fills the server with n ramdom patients.
+    """ Fills the server with n ramdom patients.
+
     :param fhir_base: the url to the FHIR api
     :param n: number of patients to create
     :return:

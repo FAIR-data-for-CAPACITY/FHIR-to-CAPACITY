@@ -11,6 +11,13 @@ CAPACITY_OUTCOME = 'discharge_capacity_arm_1'
 
 
 class Capacity:
+    """
+    Class Capacity all the logic needed for creating a record following the
+    `CAPACITY REDCap codebook`_
+
+    .. _CAPACITY REDCap codebook:
+    http://capacity-covid.eu/wp-content/uploads/CAPACITY-REDCap-2.pdf
+    """
     sex = Variable('sex', {'male': 1, 'female': 2, 'other': -1, 'unknown': -1, None: -1})
     patient_id = Variable('subjid', None)
     age_estimateyears = Variable('age_estimateyears', None)
@@ -24,20 +31,42 @@ class Capacity:
     outcome_date_known = Variable('capdis_date', {True: 1, False: 2})
     outcome_date = Variable('capdis_outcomedate', None)
 
-    def __init__(self, patient_id, sex=None, age_estimateyears=None, age_estimateyearsu=None,
-                 admission_date=None, admission_any_date=None, outcome=None,
-                 outcome_date_known=None, outcome_date=None):
+    def __init__(self,
+                 patient_id: str, sex: str = None,
+                 age_estimateyears: int = None,
+                 age_estimateyearsu: str = None,
+                 admission_date: str = None,
+                 admission_any_date: str = None,
+                 outcome_date_known: bool = None,
+                 outcome_date: str = None
+                 ):
+        """
+        Create new CAPACITY record instance.
+
+        :param patient_id: Unique, pseudonymized identifier.
+        :param sex: the patients gender. Possible values: 'male', 'female', 'other', 'unknown', None
+        :param age_estimateyears: age of the patient. Either in number of months or years.
+        :param age_estimateyearsu: the unit used to indicate age. Possible values: 'months', 'years'
+        :param admission_date: date of first admission to this facility
+        :param admission_any_date: date of first admission to any facility
+        :param outcome_date_known: is the outcome date known
+        :param outcome_date: outcome date as "dd-mm-yyyy"
+        """
         self.patient_id = patient_id
         self.sex = sex
         self.age_estimateyears = age_estimateyears
         self.age_estimateyearsu = age_estimateyearsu
         self.admission_date = admission_date
         self.admission_any_date = admission_any_date
-        self.outcome = outcome
         self.outcome_date_known = outcome_date_known
         self.outcome_date = outcome_date
 
     def to_records(self) -> List[Dict[str, Any]]:
+        """
+        Converts Capacity instance to a list of records (dicts)
+        :return: a list of dicts, where every dict is a record. Records are split based on the
+                    events that they belong to. Patient id is used to link the records.
+        """
         # Baseline CAPACITY record
         baseline_capacity = {
             REDCAP_EVENT_NAME: BASELINE_CAPACITY,
