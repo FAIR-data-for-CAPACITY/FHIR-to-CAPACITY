@@ -76,7 +76,7 @@ Other actions:
 ## Contributing
 
 If you want to contribute to the development of FHIR-to-CAPACITY,
-have a look at the [contribution guidelines](CONTRIBUTING.md).
+have a look at the [contribution guidelines](CONTRIBUTING.rst).
 
 ## Credits
 
