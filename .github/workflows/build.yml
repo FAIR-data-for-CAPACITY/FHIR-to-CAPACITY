@@ -31,7 +31,7 @@ jobs:
 
       - name: Test with pytest
         run: |
-          pytest --cov=capacity_mapping --cov-report=xml
+          pytest --cov=fhirtocapacity --cov-report=xml
       - name: Coveralls
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
