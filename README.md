@@ -2,18 +2,15 @@
 
 | fair-software.eu recommendations | |
 | :-- | :--  |
-| (1/5) code repository              | [![github repo badge](https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue)](https://github.com/FAIR-data-for-CAPACITY/FHIR-to-CAPACITY) |
-| (2/5) license                      | [![github license badge](https://img.shields.io/github/license/FAIR-data-for-CAPACITY/FHIR-to-CAPACITY)](https://github.com/FAIR-data-for-CAPACITY/FHIR-to-CAPACITY) |
-| (3/5) community registry           | [![RSD](https://img.shields.io/badge/rsd-FHIR_TO_CAPACITY-00a3e3.svg)](https://www.research-software.nl/software/fhir-to-capacity)  |
-| (4/5) citation                     | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4818370.svg)](https://doi.org/10.5281/zenodo.4818370) |
-| (5/5) checklist                    | [![workflow cii badge](https://bestpractices.coreinfrastructure.org/projects/<replace-with-created-project-identifier>/badge)](https://bestpractices.coreinfrastructure.org/projects/<replace-with-created-project-identifier>) |
+| code repository              | [![github repo badge](https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue)](https://github.com/FAIR-data-for-CAPACITY/FHIR-to-CAPACITY) |
+| license                      | [![github license badge](https://img.shields.io/github/license/FAIR-data-for-CAPACITY/FHIR-to-CAPACITY)](https://github.com/FAIR-data-for-CAPACITY/FHIR-to-CAPACITY) |
+| community registry           | [![RSD](https://img.shields.io/badge/rsd-FHIR_TO_CAPACITY-00a3e3.svg)](https://www.research-software.nl/software/fhir-to-capacity)  |
+| citation                     | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4818370.svg)](https://doi.org/10.5281/zenodo.4818370) |
 | howfairis                          | [![fair-software badge](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B-yellow)](https://fair-software.eu) |
 | **Other best practices**           | &nbsp; |
 | Coverage                           | [![Coverage Status](https://coveralls.io/repos/github/FAIR-data-for-CAPACITY/FHIR-to-CAPACITY/badge.svg?branch=master)](https://coveralls.io/github/FAIR-data-for-CAPACITY/FHIR-to-CAPACITY?branch=master)|
 | **GitHub Actions**                 | &nbsp; |
 | Build                              | [![Build](https://github.com/FAIR-data-for-CAPACITY/FHIR-to-CAPACITY/actions/workflows/build.yml/badge.svg)](https://github.com/FAIR-data-for-CAPACITY/FHIR-to-CAPACITY/actions/workflows/build.yml)|
-| Citation data consistency               | [![cffconvert]({{cookiecutter.repository}}/actions/workflows/cffconvert.yml/badge.svg)]({{cookiecutter.repository}}/actions/workflows/cffconvert.yml) |
-| MarkDown link checker              | [![markdown-link-check]({{cookiecutter.repository}}/actions/workflows/markdown-link-check.yml/badge.svg)]({{cookiecutter.repository}}/actions/workflows/markdown-link-check.yml) |
 
 ## Installation
 
