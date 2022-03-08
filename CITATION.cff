@@ -7,7 +7,7 @@ authors:
     family-names: "Djura Smits"
     given-names:
     orcid: "https://orcid.org/0000-0003-4096-0260"
-date-released: 20??-MM-DD
+date-released: 2021-05-27
 doi: 10.5281/zenodo.4818030
 version: "0.1.0"
 repository-code: "https://github.com/FAIR-data-for-CAPACITY /FHIR-to-CAPACITY"
